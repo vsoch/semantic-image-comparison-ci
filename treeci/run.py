@@ -204,28 +204,23 @@ def main():
                 relationship_table_row = relationship_table[relationship_table.id==node]
                 contrast_name = relationship_table_row.name.tolist()[0]
                 concept = get_concept(id=node).json
-                # Reverse inference scores? Otherwise, we don't care
-                if node in scores_df.node.unique().tolist():
-                    meta_single = {}
-                    meta_single["scores"] = scores_df[scores_df.node==node].to_json(orient="records")
-                    # Reverse inference scores - all images
-                    image_ids = scores_df[scores_df.node == node].image_id.unique().tolist()
-                    meta_single["images"] = images["thumbnail"][images.image_id.isin(image_ids)].tolist()
-                    # Cognitive Atlas meta data
-                    meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
-                    meta_single["type"] = "concept"
-                    meta_single["thumbnail"] = "http://www.cognitiveatlas.org/images/logo-front.png"
-                    meta_single["concept"] = [relationship_table.name[relationship_table.id==node].tolist()[0]]
-                    meta_single["task"] = ""
-                    meta_single["contrast"] = []
-                    meta_single["download"] = "http://www.cognitiveatlas.org/rdf/id/%s" %node
-                    if concept[0]["definition_text"]:
-                        meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
-                    else:
-                        meta_single["description"] = ""
-                    output_file = "%s/ri_%s.json" %(base,node)
-                    filey = open(output_file,'wb')
-                    filey.write(json.dumps(meta_single, sort_keys=True,indent=4, separators=(',', ': ')))
-                    filey.close()
-
-    # Done!
+                meta_single = {}
+                # Reverse inference scores - all images
+                children_nodes = [x.replace("node_","") for x in relationship_table.id[relationship_table.parent==node].tolist()]
+                meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
+                # Cognitive Atlas meta data
+                meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
+                meta_single["type"] = "concept"
+                meta_single["thumbnail"] = "http://www.cognitiveatlas.org/images/logo-front.png"
+                meta_single["concept"] = [relationship_table.name[relationship_table.id==node].tolist()[0]]
+                meta_single["task"] = ""
+                meta_single["contrast"] = []
+                meta_single["download"] = "http://www.cognitiveatlas.org/rdf/id/%s" %node
+                if concept[0]["definition_text"]:
+                    meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
+                else:
+                    meta_single["description"] = ""
+                output_file = "%s/ri_%s.json" %(base,node)
+                filey = open(output_file,'wb')
+                filey.write(json.dumps(meta_single, sort_keys=True,indent=4, separators=(',', ': ')))
+                filey.close()
