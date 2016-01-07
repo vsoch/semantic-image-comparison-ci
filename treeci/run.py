@@ -52,16 +52,6 @@ def main():
     # Get rid of thresholded images
     images = images[images.is_thresholded == False]
 
-    # Limit to Z and T maps (all are Z and T)
-    z = images[images.map_type == "Z map"]
-    t = images[images.map_type == "T map"]
-
-    # Remove tmaps that do not have # subjects defined
-    t_collections = collections[collections.collection_id.isin([int(x) for x in t.collection])]
-    to_keep = t_collections.collection_id[t_collections.number_of_subjects.isnull()==False]
-    t = t[t.collection.isin(to_keep)]
-    images = z.append(t)
-
     ### Step 1: Load meta data sources 
     unique_contrasts = images.cognitive_contrast_cogatlas_id.unique().tolist()
 
