@@ -242,7 +242,7 @@ def main():
                 if node != "1":
                     relationship_table_row = relationship_table[relationship_table.id==node]
                     while relationship_table_row.parent.tolist()[0] != "1":
-                        current_node = relationship_table_row.id.tolist[0]
+                        current_node = relationship_table_row.id.tolist()[0]
                         current_node_images = all_nodes_images[current_node]
                         images_list = images_list + current_node_images
                         relationship_table_row = relationship_table[relationship_table.id==current_node]
