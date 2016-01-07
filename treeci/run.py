@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # Continuous integration to see updated tree of Cognitive Atlas concepts and Neurovault images
 
-from cognitiveatlas.datastructure import concept_node_triples, get_concept_categories
+from cognitiveatlas.datastructure import concept_node_triples
 from cognitiveatlas.api import get_concept
 from pyneurovault.api import get_images, get_collections
 from glob import glob
@@ -128,7 +128,6 @@ def main():
                 meta_single["task"] = ""
                 meta_single["contrast"] = []
                 meta_single["download"] = "http://www.cognitiveatlas.org/rdf/id/%s" %node
-                meta_single["category"] = categories[node]["category"]
                 if concept[0]["definition_text"]:
                     meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
                 else:
@@ -219,7 +218,6 @@ def main():
                     meta_single["task"] = ""
                     meta_single["contrast"] = []
                     meta_single["download"] = "http://www.cognitiveatlas.org/rdf/id/%s" %node
-                    meta_single["category"] = categories[node]["category"]
                     if concept[0]["definition_text"]:
                         meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
                     else:
