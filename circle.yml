@@ -21,7 +21,7 @@ dependencies:
     - conda install --yes -n condaenv pip
     - source activate condaenv
     - $HOME/miniconda2/bin/pip install setuptools
-    - $HOME/miniconda2/bin/conda install --yes pip numpy nose pandas cython numexpr
+    - $HOME/miniconda2/bin/conda install --yes pip numpy nose pandas cython numexpr scipy
     - $HOME/miniconda2/bin/pip install cognitiveatlas
     - $HOME/miniconda2/bin/pip install pyneurovault
     - $HOME/miniconda2/bin/pip install pybraincompare
