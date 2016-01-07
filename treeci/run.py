@@ -180,7 +180,10 @@ def main():
         meta_data["download"] = neurovault_row["file"].tolist()[0]
         meta_data["concept"] = concepts
         if neurovault_row["description"].tolist()[0]:
-            description = str(neurovault_row["description"].tolist()[0]).encode("utf-8")
+            try:
+                description = str(neurovault_row["description"].tolist()[0]).encode("utf-8")
+            except:
+                description = ""
             if description != "nan":
                 meta_data["description"] =  description
             else:
