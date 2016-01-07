@@ -54,7 +54,18 @@ root = $.getJSON( "data/ri_" + image_id + ".json", function(root){
         $("#node_collection").addClass("hidden");
     }
   
+meta_data["concept"] = concepts
+        meta_data["concept_id"] = concepts_ids
+        
+
+    if (root.concept){
+       $.each(root.concept, function(index,con) {
+          $('#scores_body').prepend('<tr><td><a href=concept.html?id=' + root.concept_id[index]  + '>'+ con + '</a></td><td><a href=http://www.cognitiveatlas.org/concept/id/' + root.concept_id[index] + ' target="_blank">Cognitive Atlas</a></td></tr>');  
+       });
+    }
+
    $('#chart').dataTable();
+   
 
 }).error(function(){
     $('#chart').remove();

@@ -155,7 +155,7 @@ def main():
     filey.write(json.dumps(tree, sort_keys=True,indent=4, separators=(',', ': ')))
     filey.close()
 
-    ## STEP 3: Export individual scores
+    ## STEP 3: Export individual nodes
 
     ### Images
     unique_images = images.image_id.unique().tolist()
@@ -168,6 +168,7 @@ def main():
         print "Parsing data for images %s of %s" %(s,len(unique_images))
         concepts = relationship_table.parent[relationship_table.name == str(image_id)].tolist()
         concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
+        concepts_ids = [relationship_table.id[relationship_table.id==c].tolist()[0] for c in concepts]
         neurovault_row = images[images.image_id == int(image_id)]            
         collection_row = collections[collections.collection_id == neurovault_row.collection_id.tolist()[0]]
         collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
@@ -185,6 +186,7 @@ def main():
         meta_data["contrast"] = neurovault_row["cognitive_contrast_cogatlas"].tolist()[0]
         meta_data["download"] = neurovault_row["file"].tolist()[0]
         meta_data["concept"] = concepts
+        meta_data["concept_id"] = concepts_ids
         if neurovault_row["description"].tolist()[0]:
             try:
                 description = str(neurovault_row["description"].tolist()[0]).encode("utf-8")
@@ -215,6 +217,7 @@ def main():
                 # Reverse inference scores - all images
                 children_nodes = [x.replace("node_","") for x in relationship_table.id[relationship_table.parent==node].tolist()]
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
+                meta_single["image_list"] = children_nodes
                 # Cognitive Atlas meta data
                 meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
                 meta_single["type"] = "concept"
