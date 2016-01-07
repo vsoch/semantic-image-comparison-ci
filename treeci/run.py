@@ -64,7 +64,7 @@ def main():
         image_lookup[u] = images.image_id[images.cognitive_contrast_cogatlas_id==u].tolist()
 
     # Create a data structure of tasks and contrasts for our analysis
-    relationship_table = concept_node_triples(image_dict=image_lookup,save_file=False)
+    relationship_table = concept_node_triples(image_dict=image_lookup,save_to_file=False)
 
     unique_nodes = relationship_table.id.unique().tolist()
 
