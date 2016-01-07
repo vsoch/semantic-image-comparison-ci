@@ -7,6 +7,7 @@ from pyneurovault.api import get_images, get_collections
 import nibabel
 from glob import glob
 import pandas
+import numpy
 import shutil
 import json
 import os
@@ -252,7 +253,7 @@ def main():
                         count=0
                         for image_file in images_list:
                             image = nibabel.load(image_file)
-                            if ([image.shape[i]==shape[i] for i in range(len(shape))]).all()
+                            if numpy.all([image.shape[i]==shape[i] for i in range(len(shape))]):
                                 mean_image = image.get_data() + mean_image
                                 count+=1
                         mean_image = mean_image / float(count)
