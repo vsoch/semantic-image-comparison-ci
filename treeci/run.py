@@ -94,7 +94,6 @@ def main():
             concepts = relationship_table.parent[relationship_table.name == image_id]
             concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
             neurovault_row = images[images.image_id == int(image_id)]
-            print neurovault_row
             collection_row = collections[collections.collection_id == neurovault_row.collection_id.tolist()[0]]
             collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
                                "authors":collection_row["authors"].tolist()[0],
@@ -161,11 +160,9 @@ def main():
         meta_data = {}
         meta_data["image_id"] = image_id
         print "Parsing data for images %s of %s" %(s,len(unique_images))
-        single_score_pkls = [x for x in single_scores if re.search("%s.pkl" %image_id,x)]
         concepts = relationship_table.parent[relationship_table.name == str(image_id)].tolist()
         concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
         neurovault_row = images[images.image_id == int(image_id)]            
-        print neurovault_row
         collection_row = collections[collections.collection_id == neurovault_row.collection_id.tolist()[0]]
         collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
                            "authors":collection_row["authors"].tolist()[0],
