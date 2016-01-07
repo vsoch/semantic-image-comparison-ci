@@ -205,7 +205,6 @@ def main():
     
 
     ### Concepts
-    all_nodes_images = dict()
     for node in unique_nodes:
         # This is a concept node
         if not re.search("node_",node):
@@ -234,6 +233,5 @@ def main():
                 filey = open(output_file,'wb')
                 filey.write(json.dumps(meta_single, sort_keys=True,indent=4, separators=(',', ': ')))
                 filey.close()
-                all_node_images[node] = meta_single["images"]
 
                  
