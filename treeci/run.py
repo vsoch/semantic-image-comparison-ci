@@ -63,10 +63,10 @@ def main():
     existing_contrasts = []
     for u in unique_contrasts:
         try:
-           tmp = get_contrast(id=u)
+           tmp = get_concept(contrast_id=u)
            existing_contrasts.append(u)
         except:
-            print "%s is defined in NeuroVault, does not exist in Cognitive Atlas"
+            print "%s is defined in NeuroVault, does not exist in Cognitive Atlas" %u
 
     image_lookup = dict()
     for u in existing_contrasts:
@@ -117,7 +117,7 @@ def main():
                 relationship_table_row = relationship_table[relationship_table.id==node]
                 contrast_name = relationship_table_row.name.tolist()[0]
                 concept = get_concept(id=node).json
-                meta_single["images"] = images["thumbnail"][images.image_id.isin(image_ids)].tolist()
+                #meta_single["images"] = images["thumbnail"][images.cognitive_contrast_cogatlas==node].tolist()
                 # Cognitive Atlas meta data
                 meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
                 meta_single["type"] = "concept"
