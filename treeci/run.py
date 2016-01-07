@@ -59,8 +59,17 @@ def main():
     expression = re.compile("cnt_*")
     unique_contrasts = [u for u in unique_contrasts if expression.match(u)]
 
-    image_lookup = dict()
+    # Make sure exists in cognitive atlas
+    existing_contrasts = []
     for u in unique_contrasts:
+        try:
+           tmp = get_contrast(id=u)
+           existing_contrasts.append(u)
+        except:
+            print "%s is defined in NeuroVault, does not exist in Cognitive Atlas"
+
+    image_lookup = dict()
+    for u in existing_contrasts:
         image_lookup[u] = images.image_id[images.cognitive_contrast_cogatlas_id==u].tolist()
 
     # Create a data structure of tasks and contrasts for our analysis
