@@ -94,7 +94,8 @@ def main():
             concepts = relationship_table.parent[relationship_table.name == image_id]
             concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
             neurovault_row = images[images.image_id == int(image_id)]
-            collection_row = collections[collections.collection_id == neurovault_row.collection.tolist()[0]]
+            print neurovault_row
+            collection_row = collections[collections.collection_id == neurovault_row.collection_id.tolist()[0]]
             collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
                                "authors":collection_row["authors"].tolist()[0],
                                "journal":collection_row["journal_name"].tolist()[0],
