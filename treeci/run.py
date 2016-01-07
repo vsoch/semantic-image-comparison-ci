@@ -240,6 +240,7 @@ def main():
             images_list = []
             if not re.search("node_",node):
                 if node != "1":
+                    print "Generating mean image for node %s" %node
                     relationship_table_row = relationship_table[relationship_table.id==node]
                     while relationship_table_row.parent.tolist()[0] != "1":
                         current_node = relationship_table_row.id.tolist()[0]
