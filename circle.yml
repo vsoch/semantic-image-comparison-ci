@@ -1,0 +1,28 @@
+general:
+  artifacts:
+    - .
+
+test:
+  override:
+    - source $HOME/.bashrc
+    - python -c "from visci.app import run; run()"
+
+dependencies:
+  pre:
+    - echo "Visualization-CI!"
+    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+    - chmod +x miniconda.sh
+    - ./miniconda.sh -b
+    - echo "export PATH=$HOME/miniconda2/bin:\\$PATH" >> $HOME/.bashrc
+    - echo "export PATH=$HOME/miniconda2/bin:\\$PATH" >> $HOME/.env
+    - source $HOME/.bashrc
+    - conda update --yes conda
+    - conda create --yes -n condaenv python=2.7
+    - conda install --yes -n condaenv pip
+    - source activate condaenv
+    - $HOME/miniconda2/bin/pip install setuptools
+    - $HOME/miniconda2/bin/conda install --yes pip numpy nose pandas cython numexpr
+    - $HOME/miniconda2/bin/pip install cognitiveatlas
+    - $HOME/miniconda2/bin/pip install pyneurovault
+    - $HOME/miniconda2/bin/pip install pybraincompare
+    - $HOME/miniconda2/bin/pip install visci

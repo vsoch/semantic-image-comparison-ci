@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+    <title>Reverse Inference</title>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="js/stalactite.js"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link href='//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+<meta charset="utf-8">
+<body>
+<div class="container">
+    <div class="row">
+         <h4 class="float-left">Reverse Inference</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-8" id="tree"></div>
+        <div class="col-md-4" id="info">
+                <div class="row" id="info-box">
+                       <a id="node_name_link"><h3 id="node_name">Mouse over the nodes.</h3></a>
+                       <h3 id="node_contrast" class="hidden"></h3>
+                       <h4 id="node_task" class="hidden"></h4>
+                       <p id="node_description"></p> 
+                </div>
+                <div id="node_concepts" class="row hidden" style="margin-bottom:10px">
+
+                </div>
+                <!-- Buttons -->
+                <div class="row well" id="button_controls">
+                        <div style="margin-top:10px">
+
+                            <!-- Table to see all scores -->
+                            <a href="table.html">
+                                <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span>all</button>
+                            </a>
+
+                            <!-- Download image or meta data -->                        
+                            <a id="node_download" class="hidden" target="_blank">
+                                <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download-alt"></span>download</button>
+                            </a>
+
+                            <!-- Show associated images -->
+                            <a id="node_images" class="hidden">
+                                <button type="button" data-toggle="modal" data-target="#images_modal" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span>images</button>
+                            </a>
+
+                            <!-- Details page -->
+                            <a id="node_details" class="hidden">
+                                <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign"></span>details</button>
+                            </a>
+                    </div>
+                </div>
+
+                <div class="row hidden" id="scores">
+                    <table id="inference" border="1" class="dataframe table table-striped table-bordered">
+                        <thead>
+                            <th>metric</th>
+                            <th>value</th>
+                        </thead>
+                        <tbody>
+                            <!--<tr><td>reverse inference: ranges</td><td id="scores_score_range"></td></tr>-->
+                            <tr><td>ranges score (in group)</td><td id="scores_range_score_in"></td></tr>
+                            <tr><td>ranges score (out group)</td><td id="scores_range_score_out"></td></tr>
+                            <tr><td>ranges score (bayes factor)</td><td id="scores_range_bayes"></td></tr>
+                            <tr><td>reverse inference: binary</td><td id="scores_score_binary"></td></tr>
+                            <tr><td>binary score (in group)</td><td id="scores_binary_score_in"></td></tr>
+                            <tr><td>binary score (out group)</td><td id="scores_binary_score_out"></td></tr>
+                            <tr><td>binary score (bayes factor)</td><td id="scores_binary_bayes"></td></tr>
+                            <tr><td>binary score threshold</td><td id="scores_binary_threshold"></td></tr>
+                            <tr><td>in group, N =</td><td id="scores_count_in"></td></tr>
+                            <tr><td>out group, N =</td><td id="scores_count_out"></td></tr>
+                        </tbody>
+                   </table>
+              
+                </div>
+
+                <!-- Image -->
+                <div class="row">
+                    <a href="#" id="node_image_holder" class="hidden" target="_blank">
+                        <img id="node_image" width="250px" src=""/>
+                    </a>
+                </div>
+        </div>
+    </div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="js/reverseinference.js"></script>
+</body>
+
+<footer>
+    <a class="footer" href="http://poldracklab.stanford.edu" target="_blank">Poldracklab</a>
+</footer>
+
+<!-- View Images Modal -->
+<script>
+$("#brain_maps").stalactite(); 
+</script>
+
+<div class="modal fade" id="images_modal">
+  <div class="modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Images Tagged With Concept</h4>
+        <div class="row">
+            <div class="col-md-2">
+                <p>collections </p>
+            </div>
+            <div class="col-md-10" id="collection_tags">
+               <!-- Collection tags will be added here -->
+            </div>
+        </div>
+      </div>
+      <div class="modal-body" id="brain_maps" style="text-align: center;">
+          <!-- Images get appended here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</div><!-- close container-->
+
+</html>

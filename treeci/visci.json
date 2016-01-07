@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Cognitive Atlas and NeuroVault contrast Visualization",
+        "template": "template.html",
+        "tag": "concepttree",
+        "author": "Vanessa Sochat", 
+        "publish":"True"    
+   }
+]

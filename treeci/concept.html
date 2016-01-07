@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<head>
+    <title>Reverse Inference: Cognitive Contrast</title>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="js/stalactite.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    <link href='//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<meta charset="utf-8">
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4 class="float-left" id="contrast_id">Cognitive Atlas Contrast</h4>
+        </div>
+        <div class="col-md-4">
+            <!-- Buttons -->
+            <div class="row well" id="button_controls">
+                <div style="margin-top:10px">
+
+                    <!-- Table to see all scores -->
+                    <a href="index.html">
+                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-arrow-left"></span>back</button>
+                    </a>
+
+                    <!-- Download image -->                        
+                    <a id="node_download" href="#" target="_blank">
+                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download-alt"></span>download</button>
+                    </a>
+
+                    <!-- Table with all result scores -->                         
+                    <a href="table.html">
+                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span>all</button>
+                    </a>
+
+                    <!-- Show associated images -->
+                    <a id="node_images" class="hidden">
+                        <button type="button" data-toggle="modal" data-target="#images_modal" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span>images</button>
+                    </a>
+
+                </div>
+         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8" id="scores" style="padding-right:50px">
+
+            <table border="1" class="dataframe table table-striped table-bordered" id="chart" style="margin-right:20px">
+                <thead>
+                    <tr style="text-align: right;">
+                        <th>image id</th>
+                        <th>reverse inference score</th>
+                    </tr>
+                </thead>
+                <tbody id="scores_body">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4" id="info">
+            <div class="row" id="info-box">
+                <h1 id="contrast_name"></h1>
+                <h2 id="task_name"></h2>
+                
+                <!-- Image -->
+                <div class="row">
+                    <a href="#" id="node_image_holder" class="hidden" target="_blank">
+                        <img id="node_image" width="250px" src=""/>
+                    </a>
+                </div>
+
+                <div id="concept_detail">
+                    <p id="node_description"></p>
+                </div>
+            </div>
+        </div>
+<script src="js/concept.js"></script>
+
+<!-- View Images Modal -->
+<script>
+$("#brain_maps").stalactite(); 
+</script>
+
+<div class="modal fade" id="images_modal">
+  <div class="modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Images Tagged With Concept</h4>
+        <div class="row">
+            <div class="col-md-2">
+                <p>collections </p>
+            </div>
+            <div class="col-md-10" id="collection_tags">
+               <!-- Collection tags will be added here -->
+            </div>
+        </div>
+      </div>
+      <div class="modal-body" id="brain_maps" style="text-align: center;">
+          <!-- Images get appended here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+
+</div><!-- close container-->
+
+</html>
