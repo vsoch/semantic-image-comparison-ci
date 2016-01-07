@@ -35,13 +35,13 @@ def main():
     base = "data/"
 
     # Get Neurovault Images with defined cognitive atlas contrast    
-    collections = api.get_collections()
+    collections = get_collections()
 
     # Filter images to those that have a DOI
     collections = collections[collections.DOI.isnull()==False]
     
     # Get image meta data for collections (N=1023)
-    images = api.get_images(collection_pks=collections.collection_id.tolist())
+    images = get_images(collection_pks=collections.collection_id.tolist())
 
     # Filter images to those with contrasts defined (N=98)
     images = images[images.cognitive_contrast_cogatlas_id.isnull()==False]
