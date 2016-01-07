@@ -131,7 +131,6 @@ def main():
                 meta_single["thumbnail"] = "http://www.cognitiveatlas.org/images/logo-front.png"
                 meta_single["concept"] = [relationship_table.name[relationship_table.id==node].tolist()[0]]
                 meta_single["task"] = ""
-                meta_single["mean_image"] = "mr/%s.nii.gz" %(node)
                 meta_single["contrast"] = []
                 meta_single["download"] = "http://www.cognitiveatlas.org/rdf/id/%s" %node
                 if concept[0]["definition_text"]:
@@ -235,30 +234,3 @@ def main():
                 all_node_images[node] = meta_single["images"]
 
                  
-        # Go through nodes and generate images up to parents
-        for node in unique_nodes:
-            images_list = []
-            if not re.search("node_",node):
-                if node != "1":
-                    print "Generating mean image for node %s" %node
-                    relationship_table_row = relationship_table[relationship_table.id==node]
-                    while relationship_table_row.parent.tolist()[0] != "1":
-                        current_node = relationship_table_row.id.tolist()[0]
-                        if node in all_nodes_images.keys():
-                            current_node_images = all_nodes_images[current_node]
-                            images_list = images_list + current_node_images
-                        relationship_table_row = relationship_table[relationship_table.id==current_node]
-                    images_list = numpy.unique(images_list).tolist()
-                    if len(images_list) > 0:
-                        shape = nibabel.load(images_list[0]).shape
-                        mean_image = numpy.zeros(shape)
-                        count=0
-                        for image_file in images_list:
-                            image = nibabel.load(image_file)
-                            if numpy.all([image.shape[i]==shape[i] for i in range(len(shape))]):
-                                mean_image = image.get_data() + mean_image
-                                count+=1
-                        mean_image = mean_image / float(count)
-                        mean_image = nibabel.Nifti1Image(mean_image,affine=image.get_affine())
-                        nibabel.save(mean_image,"mr/%s.nii.gz"%node)
- 
