@@ -118,7 +118,6 @@ def main():
                 contrast_name = relationship_table_row.name.tolist()[0]
                 concept = get_concept(id=node).json
                 children_nodes = [x.replace("node_","") for x in relationship_table.id[relationship_table.parent==node].tolist()]
-                print children_nodes
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
                 # Cognitive Atlas meta data
                 meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
@@ -165,7 +164,8 @@ def main():
         concepts = relationship_table.parent[relationship_table.name == str(image_id)].tolist()
         concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
         neurovault_row = images[images.image_id == int(image_id)]            
-        collection_row = collections[collections.collection_id == neurovault_row.collection.tolist()[0]]
+        print neurovault_row
+        collection_row = collections[collections.collection_id == neurovault_row.collection_id.tolist()[0]]
         collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
                            "authors":collection_row["authors"].tolist()[0],
                            "journal":collection_row["journal_name"].tolist()[0],
