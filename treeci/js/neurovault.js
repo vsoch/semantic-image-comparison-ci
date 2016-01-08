@@ -73,7 +73,7 @@ root = $.getJSON( "data/ri_" + image_id + ".json", function(root){
 
     if (root.concept){
        $.each(root.concept, function(index,con) {
-          $('#scores_body').prepend('<tr><td><a href=concept.html?id=' + root.concept_id[index]  + '>'+ con + '</a></td><td><a href=http://www.cognitiveatlas.org/concept/id/' + root.concept_id[index] + ' target="_blank">View at Cognitive Atlas</a></td></tr>');  
+          $('#scores_body').prepend('<tr><td><a href=concept.html?id=' + root.concept_id[index]  + '>'+ con + '</a></td><td><a href=http://www.cognitiveatlas.org/concept/id/' + root.concept_id[index] + '" target="_blank">View at Cognitive Atlas</a></td></tr>');  
        });
     } else {
       $('#chart').remove();

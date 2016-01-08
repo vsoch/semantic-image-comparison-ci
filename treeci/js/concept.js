@@ -90,7 +90,7 @@ root = $.getJSON( "data/ri_" + image_id + ".json", function(root){
     // If we have images
     if (root.image_list){
        $.each(root.image_list, function(index,image) {
-          $('#scores_body').prepend('<tr><td><a href=neurovault.html?id=' + image  + '>'+ image + '</a></td><td><a href="http://www.neurovault.org/images/'+ image + ' target="_blank">View on NeuroVault</a></td></tr>');  
+          $('#scores_body').prepend('<tr><td><a href=neurovault.html?id=' + image  + '>'+ image + '</a></td><td><a href="http://www.neurovault.org/images/'+ image + '" target="_blank">View on NeuroVault</a></td></tr>');  
        });
 
     $('#chart').dataTable();

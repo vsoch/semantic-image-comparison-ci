@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <div class="row">
-         <h4 class="float-left">Reverse Inference</h4>
+         <h4 class="float-left">Cognitive Atlas Concept Tree with NeuroVault Images</h4>
     </div>
     <div class="row">
         <div class="col-md-8" id="tree"></div>
@@ -38,6 +38,11 @@
                             <!-- Download image or meta data -->                        
                             <a id="node_download" class="hidden" target="_blank">
                                 <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download-alt"></span>download</button>
+                            </a>
+
+                            <!-- About modal -->
+                            <a>
+                                <button type="button" data-toggle="modal" data-target="#about_modal" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-question"></span>about</button>
                             </a>
 
                             <!-- Show associated images -->
@@ -97,6 +102,28 @@ $("#brain_maps").stalactite();
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- About modal-->
+<div class="modal fade" id="about_modal">
+  <div class="modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">About Cognitive Atlas Tagged NeuroVault Brain Maps</h4>
+      </div>
+      <div class="modal-body">
+        <p><strong>What is this tree showing me?</strong> This is a tree of <a href="http://www.cognitiveatlas.org" target="_blank">Cognitive Atlas concepts</a> and brain map images from the <a href="http://www.neurovault.org">NeuroVault</a> database that have been asserted to measure them. Each blue dot (a "node") represents either a concept (in the case of a term like "risk") or an image (in the case of a number). When you click on the name of the concept or image in the panel on the right to explore further, you will see more details about the image or concept, and a list of associated images (in the case of a concept) or concepts (in the case of an image).</p><br>
+        <p><strong>What is this?</strong>This is a continuous integration reproducible repo that will generate an updated tree of Cognitive Atlas concepts and associated NeuroVault images using APIs from both resources, which is updated whenever the branch is rebuild to reflect the current state of the Cognitive Atlas and NeuroVault.</p><br>
+       <p><strong>How do I place my data in this space?</strong>We have implemented tagging of Cognitive Atlas task and contrasts in the <a href="http://www.neurovault.org">NeuroVault</a> database, and we invite you to upload your brain maps here and tag them to be added to this visualization (upon rebuilding on CircleCI to regenerate the artifact).</p><br>
+       <p><strong>Who made this?</strong>This is a "continuous integration reproducible repo" that we have generated to go alone with work to assess the value of <a href="https://github.com/vsoch/semantic-image-comparison" target="_blank">semantic image comparison</a>. We have shown that there is value in annotating brain map images with cognitive concepts.</p>   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 </div><!-- close container-->
 

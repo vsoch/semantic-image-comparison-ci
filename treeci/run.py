@@ -118,6 +118,9 @@ def main():
                 meta_single["description"] =  str(neurovault_row["description"].tolist()[0]).encode("utf-8")
             else:
                 meta_single["description"] = ""
+            if len(meta_single["description"]) > 600:
+                meta_single["description"] = "%s..." % meta_single["description"][0:600]
+
         else: # A concept node
             if node != "1":
                 relationship_table_row = relationship_table[relationship_table.id==node]
@@ -143,6 +146,8 @@ def main():
                     meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
                 else:
                     meta_single["description"] = ""
+                if len(meta_single["description"]) > 600:
+                    meta_single["description"] = "%s..." % meta_single["description"][0:600]
         meta_data[node] = meta_single
     
     
@@ -204,6 +209,8 @@ def main():
                 meta_data["description"] = ""
         else:
             meta_data["description"] = ""
+        if len(meta_data["description"]) > 600:
+            meta_data["description"] = "%s..." % meta_data["description"][0:600]
         output_file = "%s/ri_%s.json" %(base,meta_data["image_id"])
         filey = open(output_file,'wb')
         filey.write(json.dumps(meta_data, sort_keys=True,indent=4, separators=(',', ': ')))
@@ -240,6 +247,8 @@ def main():
                     meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
                 else:
                     meta_single["description"] = ""
+                if len(meta_single["description"]) > 600:
+                    meta_single["description"] = "%s..." % meta_single["description"][0:600]
                 output_file = "%s/ri_%s.json" %(base,node)
                 filey = open(output_file,'wb')
                 filey.write(json.dumps(meta_single, sort_keys=True,indent=4, separators=(',', ': ')))
