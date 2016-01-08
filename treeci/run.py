@@ -125,6 +125,7 @@ def main():
                 children_nodes = [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
                 while len([x for x in children_nodes if re.search("trm|tsk",x)]) > 0:
                     new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
+                    children_nodes = [x for x in children_nodes if x not in new_parent_nodes]
                     for new_parent in new_parent_nodes:
                         children_nodes = children_nodes + [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==new_parent]
                 # Now only keep children that are images
@@ -220,6 +221,7 @@ def main():
                 children_nodes = [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
                 while len([x for x in children_nodes if re.search("trm|tsk",x)]) > 0:
                     new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
+                    children_nodes = [x for x in children_nodes if x not in new_parent_nodes]
                     for new_parent in new_parent_nodes:
                         children_nodes = children_nodes + [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==new_parent]
                 # Now only keep children that are images
