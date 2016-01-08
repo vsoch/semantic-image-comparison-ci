@@ -124,7 +124,7 @@ def main():
                 contrast_name = relationship_table_row.name.tolist()[0]
                 concept = get_concept(id=node).json
                 children_nodes = relationship_table.id[relationship_table.parent==node]
-                while numpy.any([re.search("trm|tsk",x) != None for x in children_nodes]):
+                while len([re.search("trm|tsk",x) for x in children_nodes]) > 0:
                     new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
                     for new_parent in new_parent_nodes:
                         children_nodes = children_nodes + relationship_table.id[relationship_table.parent==new_parent]
@@ -221,7 +221,7 @@ def main():
                 concept = get_concept(id=node).json
                 meta_single = {}
                 children_nodes = relationship_table.id[relationship_table.parent==node]
-                while numpy.any([re.search("trm|tsk",x) != None for x in children_nodes]):
+                while len([re.search("trm|tsk",x) for x in children_nodes]) > 0:
                     new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
                     for new_parent in new_parent_nodes:
                         children_nodes = children_nodes + relationship_table.id[relationship_table.parent==new_parent]
