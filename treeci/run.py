@@ -69,7 +69,7 @@ def main():
     existing_contrasts = []
     for u in unique_contrasts:
         try:
-           tmp = get_concept(contrast_id=u)
+           tmp = get_concept(contrast_id=u,quiet=True)
            existing_contrasts.append(u)
         except:
             print "%s is defined in NeuroVault, does not exist in Cognitive Atlas" %u
@@ -124,15 +124,14 @@ def main():
         else: # A concept node
             if node != "1":
                 relationship_table_row = relationship_table[relationship_table.id==node]
-                concept = get_concept(id=node).json
-                children_nodes = [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
+                concept = get_concept(id=node,silent=True).json
+                children_nodes = [relationship_table.name.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
                 while len([x for x in children_nodes if re.search("trm|tsk",x)]) > 0:
                     new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
                     children_nodes = [x for x in children_nodes if x not in new_parent_nodes]
                     for new_parent in new_parent_nodes:
                         children_nodes = children_nodes + [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==new_parent]
                 # Now only keep children that are images
-                children_nodes = [int(x.replace("node_","")) for x in children_nodes if re.search("node_",x)]
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
                 # Cognitive Atlas meta data
                 meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
@@ -225,7 +224,7 @@ def main():
                 relationship_table_row = relationship_table[relationship_table.id==node]
                 concept = get_concept(id=node).json
                 meta_single = {}
-                children_nodes = [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
+                children_nodes = [relationship_table.name.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
                 while len([x for x in children_nodes if re.search("trm|tsk",x)]) > 0:
                     new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
                     children_nodes = [x for x in children_nodes if x not in new_parent_nodes]
