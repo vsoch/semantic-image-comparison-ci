@@ -123,7 +123,14 @@ def main():
                 relationship_table_row = relationship_table[relationship_table.id==node]
                 contrast_name = relationship_table_row.name.tolist()[0]
                 concept = get_concept(id=node).json
-                children_nodes = [x.replace("node_","") for x in relationship_table.id[relationship_table.parent==node].tolist() if re.search("node_",x)]
+                children_nodes = relationship_table.id[relationship_table.parent==node]
+                while numpy.any([re.search("trm|tsk",x) for x in children_nodes]):
+                    new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
+                    for new_parent in new_parent_nodes:
+                        children_nodes = children_nodes + relationship_table.id[relationship_table.parent==new_parent]
+                # Now only keep children that are images
+                print "CHILDREN NODES %s" %children_nodes
+                children_nodes = [x.replace("node_","") for x in children_nodes if re.search("node_",x)]
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
                 # Cognitive Atlas meta data
                 meta_single["url"] = "http://www.cognitiveatlas.org/term/id/%s" %node
@@ -213,8 +220,14 @@ def main():
                 contrast_name = relationship_table_row.name.tolist()[0]
                 concept = get_concept(id=node).json
                 meta_single = {}
-                # Reverse inference scores - all images
-                children_nodes = [x.replace("node_","") for x in relationship_table.id[relationship_table.parent==node].tolist() if re.search("node_",x)]
+                children_nodes = relationship_table.id[relationship_table.parent==node]
+                while numpy.any([re.search("trm|tsk",x) for x in children_nodes]):
+                    new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
+                    for new_parent in new_parent_nodes:
+                        children_nodes = children_nodes + relationship_table.id[relationship_table.parent==new_parent]
+                # Now only keep children that are images
+                print "CHILDREN NODES %s" %children_nodes
+                children_nodes = [x.replace("node_","") for x in children_nodes if re.search("node_",x)]
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
                 meta_single["image_list"] = children_nodes
                 # Cognitive Atlas meta data

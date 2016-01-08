@@ -3,14 +3,14 @@
     <title>Reverse Inference: NeuroVault Image</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
     <link href='//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/papaya.css">
     <script src="js/papaya.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 </head>
 
 <meta charset="utf-8">
@@ -72,6 +72,10 @@ var params = [];
                 <tbody id="scores_body">
                 </tbody>
             </table>
+            <a href="#" id="node_image_holder" class="hidden" target="_blank">
+              <img id="node_image" style="width:250px" src=""/>
+            </a>
+
         </div>
 
         <div class="col-md-9" id="info">
@@ -81,9 +85,6 @@ var params = [];
                 
                 <!-- Image -->
                 <div class="row">
-                    <a href="#" id="node_image_holder" class="hidden" target="_blank">
-                        <img id="node_image" width="200px" src=""/>
-                    </a>
                 <div class="papaya" data-params="params" style="width:560px; float:left;"></div>
                 </div>
 
