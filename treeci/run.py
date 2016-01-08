@@ -69,7 +69,7 @@ def main():
     existing_contrasts = []
     for u in unique_contrasts:
         try:
-           tmp = get_concept(contrast_id=u,quiet=True)
+           tmp = get_concept(contrast_id=u,silent=True)
            existing_contrasts.append(u)
         except:
             print "%s is defined in NeuroVault, does not exist in Cognitive Atlas" %u
@@ -120,7 +120,6 @@ def main():
                 meta_single["description"] = ""
             if len(meta_single["description"]) > 600:
                 meta_single["description"] = "%s..." % meta_single["description"][0:600]
-
         else: # A concept node
             if node != "1":
                 relationship_table_row = relationship_table[relationship_table.id==node]
