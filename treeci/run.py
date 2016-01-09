@@ -125,11 +125,12 @@ def main():
                 relationship_table_row = relationship_table[relationship_table.id==node]
                 concept = get_concept(id=node,silent=True).json
                 children_nodes = [relationship_table.name.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
-                while len([x for x in children_nodes if re.search("trm|tsk",x)]) > 0:
-                    new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
+                while len([x for x in children_nodes if not isinstance(x,int)]) > 0:
+                    new_parent_nodes = [x for x in children_nodes if not isinstance(x,int)]
                     children_nodes = [x for x in children_nodes if x not in new_parent_nodes]
                     for new_parent in new_parent_nodes:
-                        children_nodes = children_nodes + [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==new_parent]
+                        node_name = relationship_table.id[relationship_table.name==new_parent].tolist()[0]
+                        children_nodes = children_nodes + [relationship_table.name.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node_name]
                 # Now only keep children that are images
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
                 # Cognitive Atlas meta data
@@ -224,13 +225,13 @@ def main():
                 concept = get_concept(id=node).json
                 meta_single = {}
                 children_nodes = [relationship_table.name.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node]
-                while len([x for x in children_nodes if re.search("trm|tsk",x)]) > 0:
-                    new_parent_nodes = [x for x in children_nodes if re.search("trm|tsk",x)]
+                while len([x for x in children_nodes if not isinstance(x,int)]) > 0:
+                    new_parent_nodes = [x for x in children_nodes if not isinstance(x,int)]
                     children_nodes = [x for x in children_nodes if x not in new_parent_nodes]
                     for new_parent in new_parent_nodes:
-                        children_nodes = children_nodes + [relationship_table.id.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==new_parent]
+                        node_name = relationship_table.id[relationship_table.name==new_parent].tolist()[0]
+                        children_nodes = children_nodes + [relationship_table.name.tolist()[x] for x in range(relationship_table.shape[0]) if relationship_table.parent.tolist()[x]==node_name]
                 # Now only keep children that are images
-                children_nodes = [int(x.replace("node_","")) for x in children_nodes if re.search("node_",x)]
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(children_nodes)].tolist()
                 meta_single["image_list"] = children_nodes
                 # Cognitive Atlas meta data
