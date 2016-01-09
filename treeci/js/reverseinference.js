@@ -75,19 +75,20 @@ root = $.getJSON( "data/reverseinference.json", function(root){
       var nodeEnter = node.enter().append("g")
           .attr("class", "node")
           .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-          .on("click", click)
-          .on("mouseover",info);
+          .on("click", click);
 
       nodeEnter.append("circle")
           .attr("r", 1e-6)
           .style("fill", function(d) { 
               if (d.meta[0]){
-                    if (d.meta[0].category=="nii"){ // NeuroVault Color
+                    if (d.meta[0].type=="nii"){ // NeuroVault Color
                         return d._children ? "cornflowerblue" : "#fff";
                     }
                }; // Cognitive Atlas Color
                return d._children ? "darkcyan" : "#fff"; 
-           });
+           })
+          .on("mouseover",info);
+
 
       nodeEnter.append("text")
           .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
@@ -162,7 +163,7 @@ root = $.getJSON( "data/reverseinference.json", function(root){
             d.children = d._children;
             d._children = null;
             // on click, go to single image page
-            if (d.type=="nii"){
+            if (d.meta[0].type=="nii"){
                 document.location = "neurovault.html?id=" + d.name
             }
         }
@@ -206,7 +207,6 @@ root = $.getJSON( "data/reverseinference.json", function(root){
 
            // Concept Name
            $("#node_name").text(d.name);
-           $("#node_name_link").attr("href","concept.html?id=" + d.nid);
            
            // Always remove all collection tags
            $(".collection_tag").remove();
@@ -216,6 +216,7 @@ root = $.getJSON( "data/reverseinference.json", function(root){
            if (d.meta[0].images) {
 
                // We will show the concept details page
+               $("#node_name_link").attr("href","concept.html?id=" + d.nid);
                $("#node_details").attr("href","concept.html?id=" + d.nid);
                $("#node_details").removeClass("hidden")
 
@@ -247,6 +248,8 @@ root = $.getJSON( "data/reverseinference.json", function(root){
                // Hide the modal, remove all images from it
                $("#node_images").addClass("hidden");
                $(".brain_map_image").remove();
+               $("#node_name_link").attr("href","http://www.cognitiveatlas.org/term/id" + d.nid);
+               $("#node_details").addClass("hidden");
            }      
 
        
