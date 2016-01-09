@@ -33,6 +33,9 @@ def make_analysis_web_folder(html_snippet,folder_path,data_files=None,file_name=
         for data_file in data_files:
             shutil.copyfile(data_file,folder_path)
 
+
+def main():
+
     base = "data/"
 
     # Make a folder for mean images
