@@ -8,6 +8,7 @@ import nibabel
 from glob import glob
 import pandas
 import numpy
+import pickle
 import shutil
 import json
 import os
@@ -32,7 +33,15 @@ def make_analysis_web_folder(html_snippet,folder_path,data_files=None,file_name=
         for data_file in data_files:
             shutil.copyfile(data_file,folder_path)
 
-def main():
+
+base = "./reverse-inference-ci"
+data = "%s/data" %(base)
+likelihood_pickles = glob("%s/groups/*.pkl" %(data))
+scores_folder = "%s/individual_scores" %(data)     # output folder for individual scores
+tables_folder = "%s/likelihood/tables" %(data)
+
+if not os.path.exists(scores_folder):
+    os.mkdir(scores_folder)
 
     base = "data/"
 

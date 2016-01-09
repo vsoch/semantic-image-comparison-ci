@@ -1,20 +1,6 @@
 
 var root;
 
-// Show or hide images by collection
-function showAllCollections() {
-   $(".brain_map_image").removeClass("hidden")
-}
-
-function hideAllCollections() {
-   $(".brain_map_image").addClass("hidden")
-}
-
-function highlightCollection(collection_id) {
-   hideAllCollections();
-   $(".collectionID" + collection_id).removeClass("hidden")
-}
-
 
 root = $.getJSON( "data/reverseinference.json", function(root){
 
@@ -162,10 +148,6 @@ root = $.getJSON( "data/reverseinference.json", function(root){
         } else {
             d.children = d._children;
             d._children = null;
-            // on click, go to single image page
-            if (d.meta[0].type=="nii"){
-                document.location = "neurovault.html?id=" + d.name
-            }
         }
         update(d);
      }
@@ -178,6 +160,8 @@ root = $.getJSON( "data/reverseinference.json", function(root){
        $("#node_task").addClass("hidden")
        $("#node_contrast").addClass("hidden")
        $("#node_concepts").addClass("hidden")
+       $("#node_name_link").attr("href",d.meta[0].url)
+       $("#node_name_link").attr("target","_blank")
        
        // Update the interface with name and description
        if (d.meta[0].description){
@@ -208,67 +192,16 @@ root = $.getJSON( "data/reverseinference.json", function(root){
            // Concept Name
            $("#node_name").text(d.name);
            
-           // Always remove all collection tags
-           $(".collection_tag").remove();
            $("#scores").addClass("hidden");
-           
-           // Associated image set
-           if (d.meta[0].images) {
-
-               // We will show the concept details page
-               $("#node_name_link").attr("href","concept.html?id=" + d.nid);
-               $("#node_details").attr("href","concept.html?id=" + d.nid);
-               $("#node_details").removeClass("hidden")
-
-               // We will show the images modal
-               $("#node_images").removeClass("hidden");
                
-               var collections = []
-               // Add images to the modal
-               $.each(d.meta[0].images, function(index,url) {
-                   var collection_id = url.split("images/")[1].split("/")[0]
-                   var image_link = url.split("/media")[0] + "/images/" + url.split("/glass_brain_")[1].split(".")[0]
-                   $('#brain_maps').prepend('<a href="'+ image_link +'" target="_blank"><img class="brain_map_image collectionID' + collection_id + '" src="' + url +'" width="200px" /></a>');
-                   collections.push(collection_id)
-               });
-
-               // Get unique collections to render
-               collections = $.unique(collections)
-
-               // Update Modal Title
-               $(".modal-title").text("images tagged with " + d.name)
-
-               // Add tags to hide/show collection images
-               $('#collection_tags').prepend('<button type="button" class="btn btn-xs btn-primary collection_tag" onclick=showAllCollections() >reset</button>');
-               $.each(collections, function(index,collection) {
-                  $('#collection_tags').prepend('<button type="button" class="btn btn-xs btn-default collection_tag" onclick=highlightCollection(' + collection + ')>'+ collection +'</button>');
-               });
-
-           } else {
-               // Hide the modal, remove all images from it
-               $("#node_images").addClass("hidden");
-               $(".brain_map_image").remove();
-               $("#node_name_link").attr("href","http://www.cognitiveatlas.org/term/id" + d.nid);
-               $("#node_details").addClass("hidden");
-           }      
-
-       
        // ##### NEUROVAULT IMAGE
        } else {
 
            // Start by removing all old concepts
-           $(".ca_concept").remove()
-           $("#node_images").addClass("hidden")
-           $(".brain_map_image").remove();
            $("#scores").addClass("hidden");      
 
            // Name should have link
            $("#node_name").text(d.name);
-           $("#node_name_link").attr("href","neurovault.html?id=" + d.name);
-
-           // Link to detail page
-           $("#node_details").attr("href","neurovault.html?id=" + d.name);
-           $("#node_details").removeClass("hidden");
 
            $("#node_task").text(d.meta[0].task)
            $("#node_contrast").text(d.meta[0].contrast)
