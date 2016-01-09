@@ -33,16 +33,6 @@ def make_analysis_web_folder(html_snippet,folder_path,data_files=None,file_name=
         for data_file in data_files:
             shutil.copyfile(data_file,folder_path)
 
-
-base = "./reverse-inference-ci"
-data = "%s/data" %(base)
-likelihood_pickles = glob("%s/groups/*.pkl" %(data))
-scores_folder = "%s/individual_scores" %(data)     # output folder for individual scores
-tables_folder = "%s/likelihood/tables" %(data)
-
-if not os.path.exists(scores_folder):
-    os.mkdir(scores_folder)
-
     base = "data/"
 
     # Make a folder for mean images
